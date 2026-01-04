@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Triage | JeevRaksha</title>
+    <meta name="description" content="AI-powered animal health triage system for quick emergency assessment and rescue coordination.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-content">
+            <div class="logo-top">
+                <a href="index.html" style="display:flex;align-items:center;gap:1rem;text-decoration:none;">
+                    <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-img">
+                    <span class="logo-text">JeevRaksha</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <nav class="sidebar">
+        <ul class="sidebar-links">
+            <li><a href="index.html#about"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="index.html#report"><i class="fas fa-paw"></i> Report Animal</a></li>
+            <li><a href="index.html#dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="ai-triage.html" class="active"><i class="fas fa-robot"></i> AI Triage</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <section class="ai-triage-section" id="ai-triage" style="display:block;">
+            <div class="container">
+                <h2><i class="fas fa-brain"></i> AI-Powered Animal Health Triage</h2>
+                <p class="ai-triage-lead">Use AI to quickly assess animal emergencies, get instant first-aid guidance, and connect with the right help faster.</p>
+                <div class="ai-triage-content">
+                    <div class="ai-triage-how">
+                        <h3><i class="fas fa-cogs"></i> How Does It Work?</h3>
+                        <ol class="ai-triage-list">
+                            <li><strong><i class="fas fa-camera"></i> Upload Photos or Videos:</strong> Share clear images or a short video of the animal's condition. The AI analyzes visible injuries, posture, and distress signs.</li>
+                            <li><strong><i class="fas fa-clipboard-list"></i> Describe Symptoms:</strong> Answer a few simple yes/no questions about bleeding, breathing, movement, and age.</li>
+                            <li><strong><i class="fas fa-bolt"></i> AI Urgency Assessment:</strong> The system instantly classifies the case as <span style="color:#dc2626;font-weight:700;">🔴 Critical</span>, <span style="color:#ea580c;font-weight:700;">🟠 Urgent</span>, <span style="color:#ca8a04;font-weight:700;">🟡 Monitor</span>, or <span style="color:#16a34a;font-weight:700;">🟢 Non-Emergency</span>.</li>
+                            <li><strong><i class="fas fa-first-aid"></i> Immediate First Aid:</strong> Get step-by-step first-aid instructions tailored to the animal's needs.</li>
+                            <li><strong><i class="fas fa-phone-alt"></i> Guided Contact:</strong> The system tells you who to contact—nearest vet, NGO, or volunteer—based on urgency.</li>
+                            <li><strong><i class="fas fa-sort-amount-up"></i> Rescue Queue Prioritization:</strong> Critical and urgent cases are sent to the top of rescue teams' lists.</li>
+                        </ol>
+                        <h4><i class="fas fa-star"></i> Why use AI Triage?</h4>
+                        <ul class="ai-triage-benefits">
+                            <li>Save time and resources for NGOs and rescuers</li>
+                            <li>Reduce confusion for the public</li>
+                            <li>Ensure real emergencies get immediate attention</li>
+                            <li>Support safer, smarter animal rescue across India</li>
+                        </ul>
+                    </div>
+                    <h3><i class="fas fa-play-circle"></i> Try the AI Triage Demo</h3>
+                    <form id="aiTriageForm" class="ai-triage-form" action="triage-result.html" method="GET">
+                        <label for="triageAnimal"><i class="fas fa-paw"></i> Animal Type</label>
+                        <select id="triageAnimal" name="animal" required>
+                            <option value="">Select animal type...</option>
+                            <option value="dog">🐕 Dog (कुत्ता)</option>
+                            <option value="cat">🐈 Cat (बिल्ली)</option>
+                            <option value="cow">🐄 Cow (गाय)</option>
+                            <option value="buffalo">🐃 Buffalo (भैंस)</option>
+                            <option value="donkey">🫏 Donkey (गधा)</option>
+                            <option value="horse">🐴 Horse (घोड़ा)</option>
+                            <option value="bird">🐦 Bird (पक्षी)</option>
+                            <option value="other">🐾 Other (अन्य)</option>
+                        </select>
+                        <label for="triageImage"><i class="fas fa-image"></i> Upload Photo/Video (Optional)</label>
+                        <input type="file" id="triageImage" name="triageImage" accept="image/*,video/*">
+                        <div class="triage-questions">
+                            <label><i class="fas fa-tint"></i> Is the animal bleeding?</label>
+                            <select name="bleeding" required><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select>
+                            <label><i class="fas fa-walking"></i> Unable to stand/walk?</label>
+                            <select name="stand" required><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select>
+                            <label><i class="fas fa-car-crash"></i> Hit by vehicle?</label>
+                            <select name="vehicle" required><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select>
+                            <label><i class="fas fa-lungs"></i> Breathing difficulty?</label>
+                            <select name="breathing" required><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select>
+                            <label><i class="fas fa-baby"></i> Young/baby animal?</label>
+                            <select name="young" required><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select>
+                        </div>
+                        <button type="submit" class="cta-btn" style="margin-top:1.5rem;width:100%;justify-content:center;"><i class="fas fa-magic"></i> Get Triage Result</button>
+                    </form>
+                    <div id="aiTriageResult" class="ai-triage-result" style="display:none;"></div>
+                    <div class="ai-triage-pitch">
+                        <i class="fas fa-lightbulb" style="color:#fbbf24;margin-right:8px;"></i>
+                        <strong>Our Mission:</strong> "An AI-powered triage system that quickly assesses animal health emergencies and routes help where it's needed most—saving time, resources, and lives."
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p><i class="fas fa-heart"></i> &copy; 2026 JeevRaksha. Made with love for animals. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

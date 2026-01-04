@@ -1,0 +1,2628 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JeevRaksha - Animal Rescue Reporting</title>
+    <meta name="description" content="JeevRaksha connects caring citizens with NGOs to ensure every animal gets timely help through quick reporting and rescue coordination.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script defer src="script.js"></script>
+    <!-- Leaflet CSS for Maps (Free, no API key needed) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Top Bar with Logo and Name -->
+    <header class="topbar">
+        <div class="topbar-content">
+            <div class="logo-top">
+                <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-img">
+                <span class="logo-text">JeevRaksha</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Vertical Sidebar Menu -->
+    <nav class="sidebar">
+        <ul class="sidebar-links">
+            <li><a href="#about" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#report"><i class="fas fa-paw"></i> Report Animal</a></li>
+            <li><a href="#tracking"><i class="fas fa-satellite-dish"></i> Live Tracking</a></li>
+            <li><a href="#dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="#volunteer"><i class="fas fa-hands-helping"></i> Volunteer</a></li>
+            <li><a href="#adopt"><i class="fas fa-heart"></i> Adopt</a></li>
+            <li><a href="#sponsor"><i class="fas fa-hand-holding-usd"></i> Sponsor</a></li>
+            <li><a href="#merch"><i class="fas fa-tshirt"></i> Merch Store</a></li>
+            <li><a href="#donate"><i class="fas fa-hand-holding-heart"></i> Donate</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="#team"><i class="fas fa-users"></i> Our Team</a></li>
+            <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQs</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="main-content">
+        <!-- About Us Section (Enhanced Home Page) -->
+        <section class="about-section" id="about" style="display:block;">
+            <div class="about-hero-bg">
+                <div class="about-hero-overlay"></div>
+                <div class="container about-hero-content">
+                    <h1><img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha" style="height:50px;vertical-align:middle;margin-right:10px;border-radius:8px;"> Welcome to JeevRaksha</h1>
+                    <p class="about-lead">Your trusted platform for reporting and rescuing animals in need. We connect caring citizens with NGOs to ensure every animal gets timely help.</p>
+                    <div class="about-content">
+                        <h2>Why JeevRaksha?</h2>
+                        <p>
+                            Every day, countless animals face danger, injury, or abandonment. JeevRaksha makes it easy for you to report these cases and get help fast. Our platform is designed for quick action, clear communication, and real impact.
+                        </p>
+                        <ul class="about-list">
+                            <li><strong>Easy Reporting:</strong> Share details and location of animals in distress in just a few clicks.</li>
+                            <li><strong>Instant NGO Connection:</strong> Your report reaches rescue teams and NGOs immediately.</li>
+                            <li><strong>Real Results:</strong> Track rescue status and see the difference you make.</li>
+                        </ul>
+                        <p style="margin-top:1.5rem;font-size:1.08rem;color:#4b5563;">Join us in building a safer, kinder world for animals. <strong>Your action matters!</strong></p>
+                    </div>
+                    <div class="about-btn-wrapper">
+                        <a href="#report" class="cta-btn"><i class="fas fa-bullhorn"></i> Report Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section (hidden by default) -->
+        <section class="hero" id="home" style="display:none;">
+            <div class="container hero-content">
+                <h1>Help Us Rescue Animals in Need</h1>
+                <p>Report stray or injured animals and connect with NGOs for quick action.</p>
+                <a href="#report" class="cta-btn">Report Now</a>
+            </div>
+        </section>
+
+        <!-- Report Animal Section (hidden by default) -->
+        <section class="report-section" id="report" style="display:none;">
+            <div class="container">
+                <div class="report-header">
+                    <div class="report-header-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h2>Report an Animal in Need</h2>
+                    <p class="report-subtitle">Help us rescue animals faster by providing accurate information</p>
+                </div>
+                
+                <form id="reportForm" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="animalType"><i class="fas fa-paw"></i> Animal Type</label>
+                            <select id="animalType" name="animalType" required>
+                                <option value="">Select animal type...</option>
+                                <option value="dog">🐕 Dog (कुत्ता)</option>
+                                <option value="cat">🐈 Cat (बिल्ली)</option>
+                                <option value="cow">🐄 Cow (गाय)</option>
+                                <option value="buffalo">🐃 Buffalo (भैंस)</option>
+                                <option value="donkey">🫏 Donkey (गधा)</option>
+                                <option value="horse">🐴 Horse (घोड़ा)</option>
+                                <option value="bird">🐦 Bird (पक्षी)</option>
+                                <option value="other">🐾 Other (अन्य)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="urgency"><i class="fas fa-exclamation-triangle"></i> Urgency Level</label>
+                            <div class="urgency-input-group">
+                                <select id="urgency" name="urgency" required>
+                                    <option value="">How urgent is this?</option>
+                                    <option value="critical">🔴 Critical - Life threatening</option>
+                                    <option value="high">🟠 High - Needs quick help</option>
+                                    <option value="medium">🟡 Medium - Can wait few hours</option>
+                                    <option value="low">🟢 Low - Not in immediate danger</option>
+                                </select>
+                                <button type="button" class="ai-check-btn" id="openTriageModal" title="Not sure? Let AI help you decide!">
+                                    <i class="fas fa-robot"></i> Check with AI
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description"><i class="fas fa-align-left"></i> Describe the Situation</label>
+                        <textarea id="description" name="description" placeholder="What happened? What is the animal's condition? Any visible injuries?" required></textarea>
+                    </div>
+
+                    <div class="form-group file-upload-group">
+                        <label><i class="fas fa-camera"></i> Upload Photo/Video</label>
+                        <div class="file-upload-box" id="fileUploadBox">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop or <span>click to upload</span></p>
+                            <small>Supports: JPG, PNG, MP4 (Max 10MB)</small>
+                            <input type="file" id="image" name="image" accept="image/*,video/*" required>
+                        </div>
+                        <div id="filePreview" class="file-preview"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location"><i class="fas fa-map-marker-alt"></i> Location</label>
+                        <div class="location-input-group">
+                            <input type="text" id="location" name="location" placeholder="Enter address, landmark or area..." required>
+                            <button type="button" class="location-btn" id="getLocationBtn">
+                                <i class="fas fa-crosshairs"></i> Use My Location
+                            </button>
+                        </div>
+                        <input type="hidden" id="latitude" name="latitude">
+                        <input type="hidden" id="longitude" name="longitude">
+                    </div>
+
+                    <!-- Interactive Map for Location -->
+                    <div class="form-group">
+                        <label><i class="fas fa-map"></i> Click on Map to Pin Location</label>
+                        <div id="locationMap" style="height: 300px; width: 100%; border-radius: 12px; border: 2px solid #e5e7eb; overflow: hidden; margin-top: 8px;"></div>
+                        <small style="color: #6b7280; margin-top: 5px; display: block;">📍 Click anywhere on the map to set location, or search above</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reporterContact"><i class="fas fa-phone"></i> Your Contact (Optional)</label>
+                        <input type="tel" id="reporterContact" name="contact" placeholder="Phone number for updates...">
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Report
+                        <span class="btn-loader" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+                
+                <div id="reportSuccess" class="success-message" style="display:none;">
+                    <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                    <h3>Report Submitted Successfully!</h3>
+                    <p>Our rescue team has been notified. They will respond shortly.</p>
+                    <div class="report-id-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 15px 0;">
+                        <p class="report-id" style="margin: 0;">Report ID: <strong id="reportIdText">#JR-2026-XXXX</strong></p>
+                        <button type="button" id="copyReportIdBtn" class="copy-btn" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <button type="button" id="submitAnotherReportBtn" style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-size: 16px; margin-top: 15px;">
+                        <i class="fas fa-plus"></i> Submit Another Report
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- NGO Dashboard Section (hidden by default) -->
+        <section class="dashboard-section" id="dashboard" style="display:none;">
+            <div class="container">
+                <div class="dashboard-header">
+                    <div class="dashboard-icon-wrapper">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h2>Partner NGOs Dashboard</h2>
+                    <p class="dashboard-subtitle">Our trusted rescue partners across India 🇮🇳</p>
+                </div>
+
+                <!-- NGO Stats -->
+                <div class="ngo-stats">
+                    <div class="ngo-stat-card">
+                        <i class="fas fa-building"></i>
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Partner NGOs</span>
+                    </div>
+                    <div class="ngo-stat-card">
+                        <i class="fas fa-city"></i>
+                        <span class="stat-number">35+</span>
+                        <span class="stat-label">Cities Covered</span>
+                    </div>
+                    <div class="ngo-stat-card">
+                        <i class="fas fa-users"></i>
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Rescue Teams</span>
+                    </div>
+                    <div class="ngo-stat-card">
+                        <i class="fas fa-paw"></i>
+                        <span class="stat-number">25,000+</span>
+                        <span class="stat-label">Animals Rescued</span>
+                    </div>
+                </div>
+
+                <!-- NGO Grid -->
+                <div class="ngo-grid">
+                    <!-- NGO 1 - People For Animals -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=PFA&background=16a34a&color=fff&size=80" alt="PFA">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>People For Animals (PFA)</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> Delhi NCR</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.5</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 5,200+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 45 Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 24/7 Available</span>
+                            </div>
+                            <p class="ngo-desc">India's largest animal welfare organization founded by Maneka Gandhi. Operates rescue centers, shelters, and runs sterilization programs.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-ambulance"></i> Emergency Rescue</span>
+                                <span class="service-tag"><i class="fas fa-hospital"></i> Veterinary Care</span>
+                                <span class="service-tag"><i class="fas fa-home"></i> Shelter</span>
+                                <span class="service-tag"><i class="fas fa-syringe"></i> Vaccination</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+911124621939" class="ngo-btn"><i class="fas fa-phone"></i> +91 11-2462-1939</a>
+                                <a href="mailto:contact@peopleforanimalsindia.org" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NGO 2 - Blue Cross -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=BC&background=3b82f6&color=fff&size=80" alt="Blue Cross">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>Blue Cross of India</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> Chennai, Tamil Nadu</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>5.0</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 8,500+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 120 Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 24/7 Available</span>
+                            </div>
+                            <p class="ngo-desc">One of India's oldest animal welfare organizations. Features a hospital, shelter, and adoption center for various animals.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-ambulance"></i> Emergency Rescue</span>
+                                <span class="service-tag"><i class="fas fa-hospital"></i> Full Hospital</span>
+                                <span class="service-tag"><i class="fas fa-heart"></i> Adoption</span>
+                                <span class="service-tag"><i class="fas fa-cut"></i> Sterilization</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+914422354959" class="ngo-btn"><i class="fas fa-phone"></i> +91 44-2235-4959</a>
+                                <a href="mailto:info@bluecrossofindia.org" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NGO 3 - SPCA -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=SPCA&background=ef4444&color=fff&size=80" alt="SPCA">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>SPCA Mumbai</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>4.0</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 3,800+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 65 Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 8AM - 10PM</span>
+                            </div>
+                            <p class="ngo-desc">Society for Prevention of Cruelty to Animals - Mumbai chapter. Focuses on street animal welfare and anti-cruelty campaigns.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-ambulance"></i> Rescue</span>
+                                <span class="service-tag"><i class="fas fa-gavel"></i> Legal Aid</span>
+                                <span class="service-tag"><i class="fas fa-graduation-cap"></i> Awareness</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+912223661874" class="ngo-btn"><i class="fas fa-phone"></i> +91 22-2366-1874</a>
+                                <a href="mailto:spca@spcamumbai.org" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NGO 4 - Friendicoes -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=FRI&background=f59e0b&color=fff&size=80" alt="Friendicoes">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>Friendicoes SECA</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> New Delhi</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.6</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 4,200+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 80 Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 24/7 Available</span>
+                            </div>
+                            <p class="ngo-desc">Delhi's premier animal sanctuary. Known for rescuing and rehabilitating street animals with their dedicated shelter in Jorbagh.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-ambulance"></i> Emergency Rescue</span>
+                                <span class="service-tag"><i class="fas fa-home"></i> Sanctuary</span>
+                                <span class="service-tag"><i class="fas fa-heart"></i> Adoption</span>
+                                <span class="service-tag"><i class="fas fa-hospital"></i> Medical Care</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+911124311654" class="ngo-btn"><i class="fas fa-phone"></i> +91 11-2431-1654</a>
+                                <a href="mailto:info@friendicoes.org" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NGO 5 - CUPA -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=CUPA&background=8b5cf6&color=fff&size=80" alt="CUPA">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>CUPA Bangalore</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> Bangalore, Karnataka</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 6,100+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 150 Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 24/7 Available</span>
+                            </div>
+                            <p class="ngo-desc">Compassion Unlimited Plus Action - Bangalore's largest animal rescue organization with multiple rescue centers and trauma care.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-ambulance"></i> Rescue</span>
+                                <span class="service-tag"><i class="fas fa-hospital"></i> Trauma Care</span>
+                                <span class="service-tag"><i class="fas fa-heart"></i> Adoption</span>
+                                <span class="service-tag"><i class="fas fa-horse"></i> Large Animals</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+918025321363" class="ngo-btn"><i class="fas fa-phone"></i> +91 80-2532-1363</a>
+                                <a href="mailto:cupablr@gmail.com" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NGO 6 - Animal Aid Unlimited -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=AAU&background=ec4899&color=fff&size=80" alt="Animal Aid">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>Animal Aid Unlimited</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> Udaipur, Rajasthan</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>5.0</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 10,000+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 200+ Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 24/7 Available</span>
+                            </div>
+                            <p class="ngo-desc">World-famous rescue organization known for their viral rescue videos. State-of-the-art hospital for street animals.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-ambulance"></i> Street Rescue</span>
+                                <span class="service-tag"><i class="fas fa-hospital"></i> Hospital</span>
+                                <span class="service-tag"><i class="fas fa-cow"></i> All Animals</span>
+                                <span class="service-tag"><i class="fas fa-video"></i> Awareness</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+919829025523" class="ngo-btn"><i class="fas fa-phone"></i> +91 98290-25523</a>
+                                <a href="mailto:animalaidunlimited@gmail.com" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NGO 7 - Wildlife SOS -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=WSOS&background=059669&color=fff&size=80" alt="Wildlife SOS">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>Wildlife SOS</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> Agra & Delhi</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 3,500+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 90 Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 24/7 Helpline</span>
+                            </div>
+                            <p class="ngo-desc">Specializes in wildlife rescue including bears, elephants, leopards, and reptiles. Runs rescue centers and rehabilitation programs.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-paw"></i> Wildlife Rescue</span>
+                                <span class="service-tag"><i class="fas fa-elephant"></i> Elephants</span>
+                                <span class="service-tag"><i class="fas fa-snake"></i> Reptiles</span>
+                                <span class="service-tag"><i class="fas fa-tree"></i> Rehabilitation</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+919917109666" class="ngo-btn"><i class="fas fa-phone"></i> +91 99171-09666</a>
+                                <a href="mailto:info@wildlifesos.org" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NGO 8 - Karuna Society -->
+                    <div class="ngo-card" onclick="toggleNgoDetails(this)">
+                        <div class="ngo-card-header">
+                            <div class="ngo-logo">
+                                <img src="https://ui-avatars.com/api/?name=KS&background=0ea5e9&color=fff&size=80" alt="Karuna">
+                            </div>
+                            <div class="ngo-basic-info">
+                                <h3>Karuna Society</h3>
+                                <p class="ngo-location"><i class="fas fa-map-marker-alt"></i> Puttaparthi, Andhra Pradesh</p>
+                                <div class="ngo-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <div class="ngo-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="ngo-details">
+                            <div class="ngo-stats-mini">
+                                <span><i class="fas fa-paw"></i> 7,000+ Rescues</span>
+                                <span><i class="fas fa-users"></i> 100 Volunteers</span>
+                                <span><i class="fas fa-clock"></i> 24/7 Available</span>
+                            </div>
+                            <p class="ngo-desc">Award-winning shelter known for rescuing and caring for disabled animals. Has one of India's largest sanctuaries for street dogs.</p>
+                            <div class="ngo-services">
+                                <span class="service-tag"><i class="fas fa-ambulance"></i> Rescue</span>
+                                <span class="service-tag"><i class="fas fa-wheelchair"></i> Disabled Care</span>
+                                <span class="service-tag"><i class="fas fa-home"></i> Sanctuary</span>
+                                <span class="service-tag"><i class="fas fa-cut"></i> ABC Program</span>
+                            </div>
+                            <div class="ngo-contact">
+                                <a href="tel:+918555277755" class="ngo-btn"><i class="fas fa-phone"></i> +91 85552-77755</a>
+                                <a href="mailto:info@karunasociety.org" class="ngo-btn"><i class="fas fa-envelope"></i> Email</a>
+                                <a href="#" class="ngo-btn primary"><i class="fas fa-paper-plane"></i> Send Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Reports Table -->
+                <div class="reports-section">
+                    <h3><i class="fas fa-clipboard-list"></i> Recent Reports</h3>
+                    <div class="dashboard-table-wrapper">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-hashtag"></i> Report ID</th>
+                                    <th><i class="fas fa-paw"></i> Animal</th>
+                                    <th><i class="fas fa-info-circle"></i> Description</th>
+                                    <th><i class="fas fa-map-marker-alt"></i> Location</th>
+                                    <th><i class="fas fa-tasks"></i> Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardData">
+                                <!-- Static data populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Tracking Section -->
+        <section class="tracking-section" id="tracking" style="display:none;">
+            <div class="container">
+                <div class="tracking-header">
+                    <div class="tracking-icon-wrapper">
+                        <i class="fas fa-satellite-dish"></i>
+                        <span class="pulse-ring"></span>
+                    </div>
+                    <h2>Live Rescue Tracking</h2>
+                    <p class="tracking-subtitle">Track your reported animal rescue in real-time</p>
+                </div>
+
+                <!-- Search Box -->
+                <div class="tracking-search">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="trackingInput" placeholder="Enter Report ID (e.g., JR-2026-X7K9)">
+                        <button type="button" id="trackBtn" class="track-btn">
+                            <i class="fas fa-location-arrow"></i> Track
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Rescues Grid -->
+                <div class="active-rescues">
+                    <h3><i class="fas fa-ambulance"></i> Active Rescue Operations <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span></h3>
+                    <div class="rescue-cards">
+                        <div class="rescue-card rescue-critical">
+                            <div class="rescue-status-bar"></div>
+                            <div class="rescue-header">
+                                <span class="rescue-id">JR-2026-A1B2</span>
+                                <span class="rescue-urgency critical"><i class="fas fa-exclamation-circle"></i> Critical</span>
+                            </div>
+                            <div class="rescue-info">
+                                <p class="animal-type"><i class="fas fa-dog"></i> Injured Dog</p>
+                                <p class="rescue-location"><i class="fas fa-map-marker-alt"></i> Sector 15, Noida</p>
+                            </div>
+                            <div class="rescue-timeline">
+                                <div class="timeline-item completed">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Report Received</span>
+                                    <small>10:30 AM</small>
+                                </div>
+                                <div class="timeline-item completed">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Team Dispatched</span>
+                                    <small>10:35 AM</small>
+                                </div>
+                                <div class="timeline-item active">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>En Route</span>
+                                    <small>ETA: 5 mins</small>
+                                </div>
+                                <div class="timeline-item pending">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Rescue Complete</span>
+                                </div>
+                            </div>
+                            <div class="rescue-team">
+                                <img src="https://ui-avatars.com/api/?name=Rescue+Team&background=16a34a&color=fff" alt="Team">
+                                <div class="team-info">
+                                    <strong>Team Alpha</strong>
+                                    <small><i class="fas fa-phone"></i> +91 98765 43210</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rescue-card rescue-urgent">
+                            <div class="rescue-status-bar"></div>
+                            <div class="rescue-header">
+                                <span class="rescue-id">JR-2026-C3D4</span>
+                                <span class="rescue-urgency urgent"><i class="fas fa-exclamation-triangle"></i> Urgent</span>
+                            </div>
+                            <div class="rescue-info">
+                                <p class="animal-type"><i class="fas fa-cat"></i> Stray Cat</p>
+                                <p class="rescue-location"><i class="fas fa-map-marker-alt"></i> Connaught Place, Delhi</p>
+                            </div>
+                            <div class="rescue-timeline">
+                                <div class="timeline-item completed">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Report Received</span>
+                                    <small>11:00 AM</small>
+                                </div>
+                                <div class="timeline-item active">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>Assigning Team</span>
+                                    <small>Processing...</small>
+                                </div>
+                                <div class="timeline-item pending">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Team Dispatch</span>
+                                </div>
+                                <div class="timeline-item pending">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Rescue Complete</span>
+                                </div>
+                            </div>
+                            <div class="rescue-team">
+                                <div class="team-pending">
+                                    <i class="fas fa-users"></i>
+                                    <span>Assigning nearest team...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rescue-card rescue-moderate">
+                            <div class="rescue-status-bar"></div>
+                            <div class="rescue-header">
+                                <span class="rescue-id">JR-2026-E5F6</span>
+                                <span class="rescue-urgency moderate"><i class="fas fa-info-circle"></i> Moderate</span>
+                            </div>
+                            <div class="rescue-info">
+                                <p class="animal-type"><i class="fas fa-dove"></i> Injured Bird</p>
+                                <p class="rescue-location"><i class="fas fa-map-marker-alt"></i> Lajpat Nagar, Delhi</p>
+                            </div>
+                            <div class="rescue-timeline">
+                                <div class="timeline-item completed">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Report Received</span>
+                                    <small>9:15 AM</small>
+                                </div>
+                                <div class="timeline-item completed">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Team Dispatched</span>
+                                    <small>9:30 AM</small>
+                                </div>
+                                <div class="timeline-item completed">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Rescue Complete</span>
+                                    <small>10:00 AM</small>
+                                </div>
+                                <div class="timeline-item active">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>At Vet Clinic</span>
+                                    <small>Under Treatment</small>
+                                </div>
+                            </div>
+                            <div class="rescue-team">
+                                <img src="https://ui-avatars.com/api/?name=Team+Beta&background=f59e0b&color=fff" alt="Team">
+                                <div class="team-info">
+                                    <strong>Team Beta</strong>
+                                    <small><i class="fas fa-hospital"></i> City Vet Clinic</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Map Simulation -->
+                <div class="live-map-container">
+                    <h3><i class="fas fa-map-marked-alt"></i> Live Rescue Map</h3>
+                    <div class="live-map">
+                        <div class="map-placeholder">
+                            <div class="map-pin pin-1" title="Team Alpha - En Route">
+                                <i class="fas fa-ambulance"></i>
+                                <span class="pin-pulse"></span>
+                            </div>
+                            <div class="map-pin pin-2" title="Rescue Location">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="map-route"></div>
+                            <div class="map-overlay-text">
+                                <i class="fas fa-satellite"></i>
+                                <p>Live GPS Tracking Active</p>
+                                <small>Last updated: Just now</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tracking Stats -->
+                <div class="tracking-stats">
+                    <div class="track-stat">
+                        <i class="fas fa-clock"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">12 min</span>
+                            <span class="stat-label">Avg Response Time</span>
+                        </div>
+                    </div>
+                    <div class="track-stat">
+                        <i class="fas fa-truck"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">8</span>
+                            <span class="stat-label">Teams Active Now</span>
+                        </div>
+                    </div>
+                    <div class="track-stat">
+                        <i class="fas fa-check-double"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">47</span>
+                            <span class="stat-label">Rescued Today</span>
+                        </div>
+                    </div>
+                    <div class="track-stat">
+                        <i class="fas fa-hospital"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">15</span>
+                            <span class="stat-label">At Vet Clinics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Volunteer Section -->
+        <section class="volunteer-section" id="volunteer" style="display:none;">
+            <div class="container">
+                <div class="volunteer-header">
+                    <div class="volunteer-icon-wrapper">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h2>Join Our Volunteer Team</h2>
+                    <p class="volunteer-subtitle">Be the hero animals need - join the JeevRaksha family today!</p>
+                </div>
+
+                <!-- Why Volunteer -->
+                <div class="why-volunteer">
+                    <h3><i class="fas fa-heart"></i> Why Volunteer with JeevRaksha?</h3>
+                    <div class="why-cards">
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-paw"></i></div>
+                            <h4>Save Lives</h4>
+                            <p>Directly contribute to rescuing and rehabilitating injured animals every day</p>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-users"></i></div>
+                            <h4>Join a Community</h4>
+                            <p>Connect with 500+ like-minded animal lovers across India</p>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-certificate"></i></div>
+                            <h4>Get Certified</h4>
+                            <p>Receive official volunteer certificates & recommendation letters</p>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <h4>Learn & Grow</h4>
+                            <p>Free training in animal first aid, rescue operations & welfare</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Volunteer Roles -->
+                <div class="volunteer-roles">
+                    <h3><i class="fas fa-briefcase"></i> Volunteer Opportunities</h3>
+                    <div class="roles-grid">
+                        <div class="role-card">
+                            <div class="role-badge rescue">Field Work</div>
+                            <h4><i class="fas fa-ambulance"></i> Rescue Volunteer</h4>
+                            <p>Join our rescue team to help pick up injured animals and transport them to clinics.</p>
+                            <ul class="role-requirements">
+                                <li><i class="fas fa-check"></i> Age 18+ with valid driving license</li>
+                                <li><i class="fas fa-check"></i> Available for emergency calls</li>
+                                <li><i class="fas fa-check"></i> Basic animal handling training provided</li>
+                            </ul>
+                            <span class="role-time"><i class="fas fa-clock"></i> Flexible hours</span>
+                        </div>
+
+                        <div class="role-card">
+                            <div class="role-badge medical">Medical</div>
+                            <h4><i class="fas fa-stethoscope"></i> Vet Clinic Assistant</h4>
+                            <p>Assist veterinarians with treatments, post-surgery care, and medication.</p>
+                            <ul class="role-requirements">
+                                <li><i class="fas fa-check"></i> Vet students or medical background preferred</li>
+                                <li><i class="fas fa-check"></i> Comfortable around injured animals</li>
+                                <li><i class="fas fa-check"></i> Weekday availability</li>
+                            </ul>
+                            <span class="role-time"><i class="fas fa-clock"></i> 4-6 hours/week</span>
+                        </div>
+
+                        <div class="role-card">
+                            <div class="role-badge foster">Home Based</div>
+                            <h4><i class="fas fa-home"></i> Foster Parent</h4>
+                            <p>Provide temporary shelter to recovering animals until they find forever homes.</p>
+                            <ul class="role-requirements">
+                                <li><i class="fas fa-check"></i> Safe space for animals at home</li>
+                                <li><i class="fas fa-check"></i> Family consent required</li>
+                                <li><i class="fas fa-check"></i> We provide food & medical support</li>
+                            </ul>
+                            <span class="role-time"><i class="fas fa-clock"></i> 2-4 weeks commitment</span>
+                        </div>
+
+                        <div class="role-card">
+                            <div class="role-badge awareness">Outreach</div>
+                            <h4><i class="fas fa-bullhorn"></i> Awareness Volunteer</h4>
+                            <p>Spread awareness through social media, college events, and community drives.</p>
+                            <ul class="role-requirements">
+                                <li><i class="fas fa-check"></i> Good communication skills</li>
+                                <li><i class="fas fa-check"></i> Active on social media</li>
+                                <li><i class="fas fa-check"></i> Creative content ideas welcome</li>
+                            </ul>
+                            <span class="role-time"><i class="fas fa-clock"></i> Work from anywhere</span>
+                        </div>
+
+                        <div class="role-card">
+                            <div class="role-badge tech">Remote</div>
+                            <h4><i class="fas fa-laptop-code"></i> Tech Volunteer</h4>
+                            <p>Help us build and improve our app, website, and rescue coordination systems.</p>
+                            <ul class="role-requirements">
+                                <li><i class="fas fa-check"></i> Web/App development skills</li>
+                                <li><i class="fas fa-check"></i> UI/UX design experience</li>
+                                <li><i class="fas fa-check"></i> Database & backend knowledge</li>
+                            </ul>
+                            <span class="role-time"><i class="fas fa-clock"></i> Project-based</span>
+                        </div>
+
+                        <div class="role-card">
+                            <div class="role-badge feeding">Daily</div>
+                            <h4><i class="fas fa-bone"></i> Street Feeder</h4>
+                            <p>Feed stray animals in your locality daily or weekly. We provide food supplies.</p>
+                            <ul class="role-requirements">
+                                <li><i class="fas fa-check"></i> Commitment to regular feeding</li>
+                                <li><i class="fas fa-check"></i> Report sick animals you spot</li>
+                                <li><i class="fas fa-check"></i> Any age can participate</li>
+                            </ul>
+                            <span class="role-time"><i class="fas fa-clock"></i> 30 mins/day</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Volunteer Stats -->
+                <div class="volunteer-stats">
+                    <div class="vol-stat">
+                        <span class="vol-stat-number">500+</span>
+                        <span class="vol-stat-label">Active Volunteers</span>
+                    </div>
+                    <div class="vol-stat">
+                        <span class="vol-stat-number">25+</span>
+                        <span class="vol-stat-label">Cities Covered</span>
+                    </div>
+                    <div class="vol-stat">
+                        <span class="vol-stat-number">10,000+</span>
+                        <span class="vol-stat-label">Volunteer Hours</span>
+                    </div>
+                    <div class="vol-stat">
+                        <span class="vol-stat-number">98%</span>
+                        <span class="vol-stat-label">Satisfaction Rate</span>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <div class="volunteer-form-wrapper">
+                    <h3><i class="fas fa-user-plus"></i> Register as a Volunteer</h3>
+                    <form id="volunteerForm">
+                        <div class="vol-form-grid">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Full Name *</label>
+                                <input type="text" id="volName" name="volName" placeholder="Your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> Email Address *</label>
+                                <input type="email" id="volEmail" name="volEmail" placeholder="your.email@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-phone"></i> Phone Number *</label>
+                                <input type="tel" id="volPhone" name="volPhone" placeholder="+91 98765 43210" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> City *</label>
+                                <input type="text" id="volCity" name="volCity" placeholder="Your city" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-birthday-cake"></i> Age *</label>
+                                <input type="number" id="volAge" placeholder="Your age" min="12" max="80" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-briefcase"></i> Occupation</label>
+                                <input type="text" id="volOccupation" placeholder="Student / Professional / Other">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-tasks"></i> Preferred Volunteer Role *</label>
+                            <select id="volRole" required>
+                                <option value="">Select a role...</option>
+                                <option value="rescue">🚑 Rescue Volunteer</option>
+                                <option value="clinic">🏥 Vet Clinic Assistant</option>
+                                <option value="foster">🏠 Foster Parent</option>
+                                <option value="awareness">📢 Awareness Volunteer</option>
+                                <option value="tech">💻 Tech Volunteer</option>
+                                <option value="feeding">🦴 Street Feeder</option>
+                                <option value="any">✨ Open to any role</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Availability *</label>
+                            <div class="availability-options">
+                                <label class="avail-checkbox">
+                                    <input type="checkbox" name="availability" value="weekday-morning">
+                                    <span>Weekday Mornings</span>
+                                </label>
+                                <label class="avail-checkbox">
+                                    <input type="checkbox" name="availability" value="weekday-evening">
+                                    <span>Weekday Evenings</span>
+                                </label>
+                                <label class="avail-checkbox">
+                                    <input type="checkbox" name="availability" value="weekend">
+                                    <span>Weekends</span>
+                                </label>
+                                <label class="avail-checkbox">
+                                    <input type="checkbox" name="availability" value="emergency">
+                                    <span>Emergency Calls</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-comment-alt"></i> Why do you want to volunteer?</label>
+                            <textarea id="volMotivation" name="volMotivation" placeholder="Tell us about your love for animals and why you want to join JeevRaksha..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="terms-checkbox">
+                                <input type="checkbox" id="volTerms" required>
+                                <span>I agree to the <a href="#">Volunteer Guidelines</a> and commit to uphold animal welfare ethics</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="volunteer-submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit Application
+                        </button>
+                    </form>
+
+                    <div class="volunteer-success" id="volunteerSuccess" style="display:none;">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>🎉 Welcome to the JeevRaksha Family!</h3>
+                        <p>Your volunteer application has been received. Our team will contact you within <strong>48 hours</strong> to schedule an orientation session.</p>
+                        <div class="next-steps">
+                            <h4>What's Next?</h4>
+                            <ul>
+                                <li><i class="fas fa-phone"></i> Phone verification call</li>
+                                <li><i class="fas fa-video"></i> Online orientation (30 mins)</li>
+                                <li><i class="fas fa-id-card"></i> Volunteer ID card</li>
+                                <li><i class="fas fa-tshirt"></i> Official JeevRaksha t-shirt!</li>
+                            </ul>
+                        </div>
+                        <button type="button" class="vol-home-btn" id="volHomeBtn">
+                            <i class="fas fa-home"></i> Back to Home
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Volunteer Testimonials -->
+                <div class="volunteer-testimonials">
+                    <h3><i class="fas fa-quote-left"></i> Hear from Our Volunteers</h3>
+                    <div class="vol-testimonial-cards">
+                        <div class="vol-testimonial">
+                            <img src="https://ui-avatars.com/api/?name=Sneha+Gupta&background=8b5cf6&color=fff" alt="Sneha">
+                            <p>"Being a foster parent for rescued puppies has been the most rewarding experience of my life. Seeing them heal and find homes is priceless!"</p>
+                            <div class="vol-info">
+                                <strong>Sneha Gupta</strong>
+                                <span>Foster Volunteer • 2 years</span>
+                            </div>
+                        </div>
+                        <div class="vol-testimonial">
+                            <img src="https://ui-avatars.com/api/?name=Arjun+Singh&background=22c55e&color=fff" alt="Arjun">
+                            <p>"As a college student, I volunteer on weekends for rescue operations. The training I received here is something I'll cherish forever."</p>
+                            <div class="vol-info">
+                                <strong>Arjun Singh</strong>
+                                <span>Rescue Volunteer • 1 year</span>
+                            </div>
+                        </div>
+                        <div class="vol-testimonial">
+                            <img src="https://ui-avatars.com/api/?name=Priya+Sharma&background=f59e0b&color=fff" alt="Priya">
+                            <p>"I started as a street feeder and now lead awareness campaigns in my locality. JeevRaksha gave me purpose and an amazing community."</p>
+                            <div class="vol-info">
+                                <strong>Priya Sharma</strong>
+                                <span>Awareness Lead • 3 years</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Donation Section -->
+        <section class="donate-section" id="donate" style="display:none;">
+            <div class="container">
+                <div class="donate-header">
+                    <div class="donate-icon-wrapper">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h2>Support Our Mission</h2>
+                    <p class="donate-subtitle">Your generosity helps us save more lives every day</p>
+                </div>
+
+                <div class="donate-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-paw"></i>
+                        <span class="stat-number">2,500+</span>
+                        <span class="stat-label">Animals Rescued</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-hospital"></i>
+                        <span class="stat-number">1,200+</span>
+                        <span class="stat-label">Treatments Given</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-home"></i>
+                        <span class="stat-number">800+</span>
+                        <span class="stat-label">Animals Adopted</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">NGO Partners</span>
+                    </div>
+                </div>
+
+                <div class="donate-content">
+                    <div class="donate-info">
+                        <h3><i class="fas fa-heart"></i> Where Your Money Goes</h3>
+                        <ul class="donate-list">
+                            <li><i class="fas fa-check-circle"></i> <strong>Medical Care:</strong> Emergency surgeries, vaccinations & treatments</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Food & Shelter:</strong> Daily meals and safe housing for rescued animals</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Rescue Operations:</strong> Fuel, equipment & team expenses</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Rehabilitation:</strong> Physical therapy & behavioral training</li>
+                        </ul>
+                    </div>
+
+                    <div class="donate-form-wrapper">
+                        <h3><i class="fas fa-gift"></i> Make a Donation</h3>
+                        <form id="donateForm">
+                            <div class="amount-options">
+                                <button type="button" class="amount-btn" data-amount="100">₹100</button>
+                                <button type="button" class="amount-btn" data-amount="500">₹500</button>
+                                <button type="button" class="amount-btn active" data-amount="1000">₹1,000</button>
+                                <button type="button" class="amount-btn" data-amount="2500">₹2,500</button>
+                            </div>
+                            <div class="custom-amount">
+                                <label for="customAmount">Or enter custom amount:</label>
+                                <div class="amount-input-group">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="customAmount" placeholder="Enter amount" min="10">
+                                </div>
+                            </div>
+                            <div class="donor-info">
+                                <input type="text" id="donorName" name="donorName" placeholder="Your Name" required>
+                                <input type="email" id="donorEmail" name="donorEmail" placeholder="Email Address" required>
+                                <input type="tel" id="donorPhone" name="donorPhone" placeholder="Phone Number (Optional)">
+                            </div>
+                            <div class="donate-note">
+                                <label for="donateMessage"><i class="fas fa-comment-heart"></i> Leave a message (optional):</label>
+                                <textarea id="donateMessage" placeholder="Share why you're donating..."></textarea>
+                            </div>
+                            <button type="submit" class="donate-btn">
+                                <i class="fas fa-heart"></i> Donate Now
+                            </button>
+                        </form>
+                        <div class="payment-icons">
+                            <span><i class="fas fa-lock"></i> Secure Payment</span>
+                            <div class="payment-methods">
+                                <i class="fas fa-credit-card" title="Card"></i>
+                                <i class="fas fa-university" title="Net Banking"></i>
+                                <i class="fas fa-mobile-alt" title="UPI"></i>
+                                <i class="fas fa-wallet" title="Wallet"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="donate-success" id="donateSuccess" style="display:none;">
+                    <div class="success-animation">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Thank You for Your Generosity! 🙏</h3>
+                    <p>Your donation of <strong id="donatedAmount">₹1,000</strong> will help save countless animal lives.</p>
+                    <p class="success-note">A confirmation email has been sent to your email address.</p>
+                    <button class="donate-again-btn" id="donateAgainBtn">
+                        <i class="fas fa-redo"></i> Donate Again
+                    </button>
+                </div>
+
+                <div class="donate-testimonials">
+                    <h3><i class="fas fa-quote-left"></i> From Our Donors</h3>
+                    <div class="testimonial-cards">
+                        <div class="testimonial-card">
+                            <p>"Knowing my donation helps injured animals get the care they need fills my heart with joy."</p>
+                            <span class="donor-name">- Priya S., Delhi</span>
+                        </div>
+                        <div class="testimonial-card">
+                            <p>"JeevRaksha makes it so easy to contribute. I donate every month now!"</p>
+                            <span class="donor-name">- Rahul M., Mumbai</span>
+                        </div>
+                        <div class="testimonial-card">
+                            <p>"Every rupee counts. Together we can make a difference for street animals."</p>
+                            <span class="donor-name">- Anjali K., Bangalore</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sponsor Section -->
+        <section class="sponsor-section" id="sponsor" style="display:none;">
+            <div class="container">
+                <div class="sponsor-header">
+                    <div class="sponsor-icon-wrapper">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h2>Sponsor a Rescued Animal</h2>
+                    <p class="sponsor-subtitle">Can't adopt? You can still make a difference! Sponsor an animal's food, medical care & shelter 💝</p>
+                </div>
+
+                <!-- Sponsor Stats -->
+                <div class="sponsor-stats">
+                    <div class="sponsor-stat-card">
+                        <i class="fas fa-users"></i>
+                        <span class="stat-number">1,200+</span>
+                        <span class="stat-label">Active Sponsors</span>
+                    </div>
+                    <div class="sponsor-stat-card">
+                        <i class="fas fa-paw"></i>
+                        <span class="stat-number">850+</span>
+                        <span class="stat-label">Animals Sponsored</span>
+                    </div>
+                    <div class="sponsor-stat-card">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span class="stat-number">₹25L+</span>
+                        <span class="stat-label">Funds Raised</span>
+                    </div>
+                    <div class="sponsor-stat-card">
+                        <i class="fas fa-heartbeat"></i>
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Goes to Animals</span>
+                    </div>
+                </div>
+
+                <!-- Sponsorship Plans -->
+                <div class="sponsor-plans">
+                    <h3><i class="fas fa-gift"></i> Sponsorship Plans</h3>
+                    <div class="plans-grid">
+                        <div class="plan-card basic">
+                            <div class="plan-badge">Basic</div>
+                            <h4>Food Sponsor</h4>
+                            <div class="plan-price">₹500<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> Monthly food supply</li>
+                                <li><i class="fas fa-check"></i> Photo updates</li>
+                                <li><i class="fas fa-check"></i> Thank you certificate</li>
+                            </ul>
+                        </div>
+                        <div class="plan-card standard">
+                            <div class="plan-badge popular">Popular</div>
+                            <h4>Care Sponsor</h4>
+                            <div class="plan-price">₹1,000<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> Food + Basic medical</li>
+                                <li><i class="fas fa-check"></i> Monthly video updates</li>
+                                <li><i class="fas fa-check"></i> Visit the shelter</li>
+                                <li><i class="fas fa-check"></i> Sponsor certificate</li>
+                            </ul>
+                        </div>
+                        <div class="plan-card premium">
+                            <div class="plan-badge">Premium</div>
+                            <h4>Full Sponsor</h4>
+                            <div class="plan-price">₹2,500<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> Complete care package</li>
+                                <li><i class="fas fa-check"></i> Weekly updates</li>
+                                <li><i class="fas fa-check"></i> Name the animal</li>
+                                <li><i class="fas fa-check"></i> Priority adoption rights</li>
+                                <li><i class="fas fa-check"></i> Featured on website</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animals Needing Sponsors -->
+                <div class="sponsor-animals-section">
+                    <h3><i class="fas fa-paw"></i> Animals Needing Your Help</h3>
+                    <p class="section-desc">Choose an animal to sponsor and become their guardian angel</p>
+                    
+                    <div class="sponsor-grid">
+                        <!-- Animal 1 - Rocky -->
+                        <div class="sponsor-card">
+                            <div class="sponsor-image">
+                                <img src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=500&h=350&fit=crop" alt="Rocky - German Shepherd">
+                                <span class="sponsor-status urgent">Needs Urgent Care</span>
+                                <span class="sponsor-gender male"><i class="fas fa-mars"></i></span>
+                            </div>
+                            <div class="sponsor-info">
+                                <h4>Rocky</h4>
+                                <p class="sponsor-breed"><i class="fas fa-dog"></i> German Shepherd Mix</p>
+                                <div class="sponsor-details">
+                                    <span><i class="fas fa-birthday-cake"></i> 4 years</span>
+                                    <span><i class="fas fa-weight"></i> 28 kg</span>
+                                </div>
+                                <p class="sponsor-story">Rocky was rescued from a construction site with a broken leg. After surgery, he's recovering well but needs ongoing physiotherapy and special diet.</p>
+                                <div class="sponsor-needs">
+                                    <span class="need-tag"><i class="fas fa-utensils"></i> Special Diet</span>
+                                    <span class="need-tag"><i class="fas fa-pills"></i> Medication</span>
+                                </div>
+                                <div class="sponsor-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 45%"></div>
+                                    </div>
+                                    <span class="progress-text">₹4,500 / ₹10,000 raised</span>
+                                </div>
+                                <button class="sponsor-btn" onclick="alert('Thank you for choosing to sponsor Rocky! 🐕\\n\\nYou will be redirected to payment. Monthly sponsorship: ₹1,000')">
+                                    <i class="fas fa-heart"></i> Sponsor Rocky
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Animal 2 - Luna -->
+                        <div class="sponsor-card">
+                            <div class="sponsor-image">
+                                <img src="https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=500&h=350&fit=crop" alt="Luna - Calico Cat">
+                                <span class="sponsor-status new">New Rescue</span>
+                                <span class="sponsor-gender female"><i class="fas fa-venus"></i></span>
+                            </div>
+                            <div class="sponsor-info">
+                                <h4>Luna</h4>
+                                <p class="sponsor-breed"><i class="fas fa-cat"></i> Calico Cat</p>
+                                <div class="sponsor-details">
+                                    <span><i class="fas fa-birthday-cake"></i> 2 years</span>
+                                    <span><i class="fas fa-weight"></i> 3.5 kg</span>
+                                </div>
+                                <p class="sponsor-story">Luna was found abandoned with her 4 kittens. The kittens have been adopted, but Luna is still looking for a forever home. She's sweet and loves cuddles!</p>
+                                <div class="sponsor-needs">
+                                    <span class="need-tag"><i class="fas fa-utensils"></i> Food</span>
+                                    <span class="need-tag"><i class="fas fa-home"></i> Shelter</span>
+                                </div>
+                                <div class="sponsor-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 70%"></div>
+                                    </div>
+                                    <span class="progress-text">₹3,500 / ₹5,000 raised</span>
+                                </div>
+                                <button class="sponsor-btn" onclick="alert('Thank you for choosing to sponsor Luna! 🐱\\n\\nYou will be redirected to payment. Monthly sponsorship: ₹500')">
+                                    <i class="fas fa-heart"></i> Sponsor Luna
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Animal 3 - Buddy -->
+                        <div class="sponsor-card">
+                            <div class="sponsor-image">
+                                <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=500&h=350&fit=crop" alt="Buddy - Indie Dog">
+                                <span class="sponsor-gender male"><i class="fas fa-mars"></i></span>
+                            </div>
+                            <div class="sponsor-info">
+                                <h4>Buddy</h4>
+                                <p class="sponsor-breed"><i class="fas fa-dog"></i> Indian Indie</p>
+                                <div class="sponsor-details">
+                                    <span><i class="fas fa-birthday-cake"></i> 6 years</span>
+                                    <span><i class="fas fa-weight"></i> 18 kg</span>
+                                </div>
+                                <p class="sponsor-story">Buddy lived on the streets for years. He's now at our shelter, neutered and healthy. He's a loyal companion who just wants love and a warm bed.</p>
+                                <div class="sponsor-needs">
+                                    <span class="need-tag"><i class="fas fa-utensils"></i> Food</span>
+                                    <span class="need-tag"><i class="fas fa-syringe"></i> Vaccines</span>
+                                </div>
+                                <div class="sponsor-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 30%"></div>
+                                    </div>
+                                    <span class="progress-text">₹1,500 / ₹5,000 raised</span>
+                                </div>
+                                <button class="sponsor-btn" onclick="alert('Thank you for choosing to sponsor Buddy! 🐕\\n\\nYou will be redirected to payment. Monthly sponsorship: ₹500')">
+                                    <i class="fas fa-heart"></i> Sponsor Buddy
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Animal 4 - Coco -->
+                        <div class="sponsor-card">
+                            <div class="sponsor-image">
+                                <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500&h=350&fit=crop" alt="Coco - Orange Tabby">
+                                <span class="sponsor-status urgent">Medical Care Needed</span>
+                                <span class="sponsor-gender female"><i class="fas fa-venus"></i></span>
+                            </div>
+                            <div class="sponsor-info">
+                                <h4>Coco</h4>
+                                <p class="sponsor-breed"><i class="fas fa-cat"></i> Orange Tabby</p>
+                                <div class="sponsor-details">
+                                    <span><i class="fas fa-birthday-cake"></i> 3 years</span>
+                                    <span><i class="fas fa-weight"></i> 4 kg</span>
+                                </div>
+                                <p class="sponsor-story">Coco was hit by a vehicle and lost one eye. She's now blind in one eye but that doesn't stop her playful spirit. She needs ongoing eye care.</p>
+                                <div class="sponsor-needs">
+                                    <span class="need-tag"><i class="fas fa-eye"></i> Eye Care</span>
+                                    <span class="need-tag"><i class="fas fa-pills"></i> Medication</span>
+                                </div>
+                                <div class="sponsor-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 55%"></div>
+                                    </div>
+                                    <span class="progress-text">₹5,500 / ₹10,000 raised</span>
+                                </div>
+                                <button class="sponsor-btn" onclick="alert('Thank you for choosing to sponsor Coco! 🐱\\n\\nYou will be redirected to payment. Monthly sponsorship: ₹1,000')">
+                                    <i class="fas fa-heart"></i> Sponsor Coco
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Animal 5 - Max -->
+                        <div class="sponsor-card">
+                            <div class="sponsor-image">
+                                <img src="https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=500&h=350&fit=crop" alt="Max - Beagle Mix">
+                                <span class="sponsor-status new">Senior Dog</span>
+                                <span class="sponsor-gender male"><i class="fas fa-mars"></i></span>
+                            </div>
+                            <div class="sponsor-info">
+                                <h4>Max</h4>
+                                <p class="sponsor-breed"><i class="fas fa-dog"></i> Beagle Mix</p>
+                                <div class="sponsor-details">
+                                    <span><i class="fas fa-birthday-cake"></i> 10 years</span>
+                                    <span><i class="fas fa-weight"></i> 12 kg</span>
+                                </div>
+                                <p class="sponsor-story">Max is a senior dog surrendered by his family who moved abroad. He's gentle, house-trained, and just wants a quiet retirement with love.</p>
+                                <div class="sponsor-needs">
+                                    <span class="need-tag"><i class="fas fa-utensils"></i> Senior Diet</span>
+                                    <span class="need-tag"><i class="fas fa-heartbeat"></i> Health Checkups</span>
+                                </div>
+                                <div class="sponsor-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 20%"></div>
+                                    </div>
+                                    <span class="progress-text">₹1,500 / ₹7,500 raised</span>
+                                </div>
+                                <button class="sponsor-btn" onclick="alert('Thank you for choosing to sponsor Max! 🐕\\n\\nYou will be redirected to payment. Monthly sponsorship: ₹1,500')">
+                                    <i class="fas fa-heart"></i> Sponsor Max
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Animal 6 - Ginger -->
+                        <div class="sponsor-card">
+                            <div class="sponsor-image">
+                                <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500&h=350&fit=crop" alt="Ginger - Ginger Cat">
+                                <span class="sponsor-gender female"><i class="fas fa-venus"></i></span>
+                            </div>
+                            <div class="sponsor-info">
+                                <h4>Ginger</h4>
+                                <p class="sponsor-breed"><i class="fas fa-cat"></i> Ginger Cat</p>
+                                <div class="sponsor-details">
+                                    <span><i class="fas fa-birthday-cake"></i> 1 year</span>
+                                    <span><i class="fas fa-weight"></i> 3 kg</span>
+                                </div>
+                                <p class="sponsor-story">Ginger was rescued as a tiny kitten from a drain during monsoon. She's now a healthy, playful young cat who loves chasing toys and sunbathing!</p>
+                                <div class="sponsor-needs">
+                                    <span class="need-tag"><i class="fas fa-utensils"></i> Food</span>
+                                    <span class="need-tag"><i class="fas fa-gamepad"></i> Toys</span>
+                                </div>
+                                <div class="sponsor-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 85%"></div>
+                                    </div>
+                                    <span class="progress-text">₹4,250 / ₹5,000 raised</span>
+                                </div>
+                                <button class="sponsor-btn" onclick="alert('Thank you for choosing to sponsor Ginger! 🐱\\n\\nYou will be redirected to payment. Monthly sponsorship: ₹500')">
+                                    <i class="fas fa-heart"></i> Sponsor Ginger
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sponsor Benefits -->
+                <div class="sponsor-benefits">
+                    <h3><i class="fas fa-star"></i> Why Sponsor?</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <i class="fas fa-camera"></i>
+                            <h4>Regular Updates</h4>
+                            <p>Receive photos and videos of your sponsored animal</p>
+                        </div>
+                        <div class="benefit-card">
+                            <i class="fas fa-certificate"></i>
+                            <h4>Sponsor Certificate</h4>
+                            <p>Get a personalized certificate for your contribution</p>
+                        </div>
+                        <div class="benefit-card">
+                            <i class="fas fa-building"></i>
+                            <h4>Shelter Visits</h4>
+                            <p>Visit and spend time with your sponsored animal</p>
+                        </div>
+                        <div class="benefit-card">
+                            <i class="fas fa-tax"></i>
+                            <h4>Tax Benefits</h4>
+                            <p>80G tax exemption on all donations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Merchandise Section -->
+        <section class="merch-section" id="merch" style="display:none;">
+            <div class="container">
+                <div class="merch-header">
+                    <div class="merch-icon-wrapper">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h2>JeevRaksha Merch Store</h2>
+                    <p class="merch-subtitle">Wear your love for animals! 100% profits go to animal rescue operations</p>
+                </div>
+
+                <!-- Merch Categories -->
+                <div class="merch-categories">
+                    <button class="merch-cat-btn active" data-category="all"><i class="fas fa-th-large"></i> All Items</button>
+                    <button class="merch-cat-btn" data-category="clothing"><i class="fas fa-tshirt"></i> Clothing</button>
+                    <button class="merch-cat-btn" data-category="accessories"><i class="fas fa-bag-shopping"></i> Accessories</button>
+                    <button class="merch-cat-btn" data-category="stickers"><i class="fas fa-sticky-note"></i> Stickers</button>
+                    <button class="merch-cat-btn" data-category="pet"><i class="fas fa-bone"></i> Pet Items</button>
+                </div>
+
+                <!-- Eco Banner -->
+                <div class="eco-banner">
+                    <div class="eco-badge"><i class="fas fa-leaf"></i> 100% Eco-Friendly</div>
+                    <p>All products are made with sustainable, cruelty-free materials. Every purchase saves an animal!</p>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid">
+                    <!-- T-Shirts -->
+                    <div class="product-card" data-category="clothing">
+                        <div class="product-badge bestseller">Bestseller</div>
+                        <div class="product-badge discount">30% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop" alt="Green T-Shirt">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay logo-center">
+                        </div>
+                        <div class="product-info">
+                            <h4>Classic Logo T-Shirt</h4>
+                            <p class="product-desc">🌿 100% organic cotton • Eco-friendly dye</p>
+                            <div class="product-colors">
+                                <span class="color-dot active" data-color="green" style="background:#1a5f4a" title="Green"></span>
+                                <span class="color-dot" data-color="white" style="background:#ffffff; border:1px solid #ddd" title="White"></span>
+                                <span class="color-dot" data-color="black" style="background:#1f2937" title="Black"></span>
+                            </div>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹349</span>
+                                    <span class="original-price">₹499</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="clothing">
+                        <div class="product-badge new">New</div>
+                        <div class="product-badge discount">25% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400&h=400&fit=crop" alt="Black T-Shirt">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay logo-center">
+                        </div>
+                        <div class="product-info">
+                            <h4>"Rescue Hero" T-Shirt</h4>
+                            <p class="product-desc">🐾 Bold paw design • "I Rescue Animals" text</p>
+                            <div class="product-colors">
+                                <span class="color-dot active" data-color="black" style="background:#1f2937" title="Black"></span>
+                                <span class="color-dot" data-color="red" style="background:#ef4444" title="Red"></span>
+                                <span class="color-dot" data-color="blue" style="background:#3b82f6" title="Blue"></span>
+                            </div>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹399</span>
+                                    <span class="original-price">₹549</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="clothing">
+                        <div class="product-badge discount">40% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop" alt="Green Hoodie">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay logo-center">
+                        </div>
+                        <div class="product-info">
+                            <h4>Premium Hoodie</h4>
+                            <p class="product-desc">🌿 Warm fleece • Embroidered logo • Unisex</p>
+                            <div class="product-colors">
+                                <span class="color-dot active" data-color="green" style="background:#1a5f4a" title="Green"></span>
+                                <span class="color-dot" data-color="gray" style="background:#6b7280" title="Gray"></span>
+                            </div>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹799</span>
+                                    <span class="original-price">₹1,299</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="clothing">
+                        <div class="product-badge discount">20% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop" alt="Cap">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Volunteer Cap</h4>
+                            <p class="product-desc">🧢 Organic cotton • Embroidered logo</p>
+                            <div class="product-colors">
+                                <span class="color-dot active" data-color="green" style="background:#1a5f4a" title="Green"></span>
+                                <span class="color-dot" data-color="black" style="background:#1f2937" title="Black"></span>
+                            </div>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹199</span>
+                                    <span class="original-price">₹249</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accessories -->
+                    <div class="product-card" data-category="accessories">
+                        <div class="product-badge bestseller">Popular</div>
+                        <div class="product-badge discount">35% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1597484661973-ee6cd0b6482c?w=400&h=400&fit=crop" alt="Tote Bag">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Eco Tote Bag</h4>
+                            <p class="product-desc">♻️ Recycled canvas • Reusable & durable</p>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹149</span>
+                                    <span class="original-price">₹229</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="accessories">
+                        <div class="product-badge discount">25% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=400&fit=crop" alt="Coffee Mug">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Paw Print Mug</h4>
+                            <p class="product-desc">🍵 Ceramic • "Coffee & Rescue" design</p>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹199</span>
+                                    <span class="original-price">₹269</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="accessories">
+                        <div class="product-badge discount">30% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=400&fit=crop" alt="Water Bottle">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Steel Water Bottle</h4>
+                            <p class="product-desc">💧 500ml • BPA-free • Insulated</p>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹399</span>
+                                    <span class="original-price">₹569</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="accessories">
+                        <div class="product-badge discount">40% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1622434641406-a158f7b6c031?w=400&h=400&fit=crop" alt="Keychain">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Paw Keychain</h4>
+                            <p class="product-desc">🔑 Metal • Engraved JeevRaksha logo</p>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹79</span>
+                                    <span class="original-price">₹129</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stickers -->
+                    <div class="product-card" data-category="stickers">
+                        <div class="product-badge new">Pack of 10</div>
+                        <div class="product-badge discount">50% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop" alt="Stickers">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Sticker Pack</h4>
+                            <p class="product-desc">🎨 10 vinyl stickers • Waterproof</p>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹49</span>
+                                    <span class="original-price">₹99</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="stickers">
+                        <div class="product-badge discount">30% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&h=400&fit=crop" alt="Car Sticker">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Car Window Sticker</h4>
+                            <p class="product-desc">🚙 Vinyl decal • Weather resistant</p>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹69</span>
+                                    <span class="original-price">₹99</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pet Items -->
+                    <div class="product-card" data-category="pet">
+                        <div class="product-badge bestseller">For Pets!</div>
+                        <div class="product-badge discount">35% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=400&fit=crop" alt="Dog with Bandana">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>Pet Bandana</h4>
+                            <p class="product-desc">🐕 Organic cotton • Adjustable fit</p>
+                            <div class="product-colors">
+                                <span class="color-dot active" data-color="red" style="background:#ef4444" title="Red"></span>
+                                <span class="color-dot" data-color="blue" style="background:#3b82f6" title="Blue"></span>
+                                <span class="color-dot" data-color="green" style="background:#22c55e" title="Green"></span>
+                            </div>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹129</span>
+                                    <span class="original-price">₹199</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="pet">
+                        <div class="product-badge discount">25% OFF</div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1567612529009-afe25813a308?w=400&h=400&fit=crop" alt="Pet Collar">
+                            <img src="../jeevraksha logo - Copy.jpeg" alt="JeevRaksha Logo" class="logo-overlay">
+                        </div>
+                        <div class="product-info">
+                            <h4>JeevRaksha Collar</h4>
+                            <p class="product-desc">🐾 Nylon • ID tag holder • Logo charm</p>
+                            <div class="product-footer">
+                                <div class="price-group">
+                                    <span class="product-price">₹179</span>
+                                    <span class="original-price">₹239</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Merch Info -->
+                <div class="merch-info-cards">
+                    <div class="merch-info-card">
+                        <i class="fas fa-heart"></i>
+                        <h4>100% For Animals</h4>
+                        <p>Every rupee from merch sales goes directly to rescue operations & medical care</p>
+                    </div>
+                    <div class="merch-info-card">
+                        <i class="fas fa-leaf"></i>
+                        <h4>Eco-Friendly</h4>
+                        <p>All products made with sustainable, cruelty-free materials</p>
+                    </div>
+                    <div class="merch-info-card">
+                        <i class="fas fa-truck"></i>
+                        <h4>Free Shipping</h4>
+                        <p>Free delivery on orders above ₹500 across India</p>
+                    </div>
+                    <div class="merch-info-card">
+                        <i class="fas fa-undo"></i>
+                        <h4>Easy Returns</h4>
+                        <p>7-day hassle-free returns & exchanges</p>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary" id="cartSummary" style="display:none;">
+                    <div class="cart-header">
+                        <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+                        <span class="cart-count" id="cartCount">0 items</span>
+                    </div>
+                    <div class="cart-items" id="cartItems"></div>
+                    <div class="cart-total">
+                        <span>Total:</span>
+                        <span id="cartTotal">₹0</span>
+                    </div>
+                    <button class="checkout-btn" id="checkoutBtn">
+                        <i class="fas fa-credit-card"></i> Proceed to Checkout
+                    </button>
+                </div>
+
+                <!-- Floating Cart Button -->
+                <button class="floating-cart" id="floatingCart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Adopt Section -->
+        <section class="adopt-section" id="adopt" style="display:none;">
+            <div class="container">
+                <div class="adopt-header">
+                    <div class="adopt-icon-wrapper">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h2>Adopt a Friend</h2>
+                    <p class="adopt-subtitle">Give a loving home to rescued animals. Every adoption saves a life! 🐾</p>
+                </div>
+
+                <!-- Adoption Stats -->
+                <div class="adopt-stats">
+                    <div class="adopt-stat-card">
+                        <i class="fas fa-home"></i>
+                        <span class="stat-number">2,500+</span>
+                        <span class="stat-label">Animals Adopted</span>
+                    </div>
+                    <div class="adopt-stat-card">
+                        <i class="fas fa-paw"></i>
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Available Now</span>
+                    </div>
+                    <div class="adopt-stat-card">
+                        <i class="fas fa-heart"></i>
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Happy Families</span>
+                    </div>
+                    <div class="adopt-stat-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Cities Covered</span>
+                    </div>
+                </div>
+
+                <!-- Filter Buttons -->
+                <div class="adopt-filters">
+                    <button class="adopt-filter-btn active" data-filter="all"><i class="fas fa-th-large"></i> All</button>
+                    <button class="adopt-filter-btn" data-filter="dog"><i class="fas fa-dog"></i> Dogs</button>
+                    <button class="adopt-filter-btn" data-filter="cat"><i class="fas fa-cat"></i> Cats</button>
+                    <button class="adopt-filter-btn" data-filter="bird"><i class="fas fa-dove"></i> Birds</button>
+                    <button class="adopt-filter-btn" data-filter="other"><i class="fas fa-paw"></i> Others</button>
+                </div>
+
+                <!-- Adoptable Animals Grid -->
+                <div class="adopt-grid">
+                    <!-- Dog 1 -->
+                    <div class="adopt-card" data-type="dog">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop" alt="Bruno - Golden Retriever">
+                            <span class="adopt-badge urgent">Urgent</span>
+                            <span class="adopt-gender male"><i class="fas fa-mars"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Bruno</h3>
+                            <p class="adopt-breed"><i class="fas fa-dog"></i> Golden Retriever Mix</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 2 years</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Delhi</span>
+                            </div>
+                            <p class="adopt-desc">Friendly and playful! Bruno loves kids and is fully vaccinated. Looking for a loving family.</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Vaccinated</span>
+                                <span class="tag">Trained</span>
+                                <span class="tag">Good with kids</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Bruno</button>
+                        </div>
+                    </div>
+
+                    <!-- Cat 1 -->
+                    <div class="adopt-card" data-type="cat">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop" alt="Mimi - Persian Cat">
+                            <span class="adopt-badge new">New</span>
+                            <span class="adopt-gender female"><i class="fas fa-venus"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Mimi</h3>
+                            <p class="adopt-breed"><i class="fas fa-cat"></i> Persian Mix</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 1 year</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Mumbai</span>
+                            </div>
+                            <p class="adopt-desc">Sweet and calm. Mimi loves to cuddle and is perfect for apartments. Spayed and healthy.</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Spayed</span>
+                                <span class="tag">Indoor</span>
+                                <span class="tag">Calm</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Mimi</button>
+                        </div>
+                    </div>
+
+                    <!-- Dog 2 -->
+                    <div class="adopt-card" data-type="dog">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&h=300&fit=crop" alt="Tommy - Indie">
+                            <span class="adopt-gender male"><i class="fas fa-mars"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Tommy</h3>
+                            <p class="adopt-breed"><i class="fas fa-dog"></i> Indian Indie</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 3 years</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Bangalore</span>
+                            </div>
+                            <p class="adopt-desc">Loyal street dog rescued from accident. Now healthy and ready for forever home!</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Vaccinated</span>
+                                <span class="tag">Neutered</span>
+                                <span class="tag">Rescued</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Tommy</button>
+                        </div>
+                    </div>
+
+                    <!-- Bird 1 -->
+                    <div class="adopt-card" data-type="bird">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=400&h=300&fit=crop" alt="Kiwi - Parrot">
+                            <span class="adopt-badge new">New</span>
+                            <span class="adopt-gender male"><i class="fas fa-mars"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Kiwi</h3>
+                            <p class="adopt-breed"><i class="fas fa-dove"></i> Indian Ringneck</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 4 years</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Jaipur</span>
+                            </div>
+                            <p class="adopt-desc">Talkative and colorful! Kiwi can say a few words. Cage and food included.</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Talks</span>
+                                <span class="tag">Friendly</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Kiwi</button>
+                        </div>
+                    </div>
+
+                    <!-- Cat 2 -->
+                    <div class="adopt-card" data-type="cat">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&h=300&fit=crop" alt="Whiskers - Tabby">
+                            <span class="adopt-gender male"><i class="fas fa-mars"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Whiskers</h3>
+                            <p class="adopt-breed"><i class="fas fa-cat"></i> Tabby Cat</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 8 months</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Pune</span>
+                            </div>
+                            <p class="adopt-desc">Playful kitten with beautiful stripes. Loves toys and climbing. Litter trained!</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Kitten</span>
+                                <span class="tag">Playful</span>
+                                <span class="tag">Litter trained</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Whiskers</button>
+                        </div>
+                    </div>
+
+                    <!-- Dog 3 -->
+                    <div class="adopt-card" data-type="dog">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1477884213360-7e9d7dcc1e48?w=400&h=300&fit=crop" alt="Lucy - Labrador">
+                            <span class="adopt-badge urgent">Urgent</span>
+                            <span class="adopt-gender female"><i class="fas fa-venus"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Lucy</h3>
+                            <p class="adopt-breed"><i class="fas fa-dog"></i> Labrador</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 5 years</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Chennai</span>
+                            </div>
+                            <p class="adopt-desc">Gentle senior dog. Owner passed away. Needs a quiet, loving home urgently.</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Senior</span>
+                                <span class="tag">Gentle</span>
+                                <span class="tag">Trained</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Lucy</button>
+                        </div>
+                    </div>
+
+                    <!-- Other - Rabbit -->
+                    <div class="adopt-card" data-type="other">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&h=300&fit=crop" alt="Snowball - Rabbit">
+                            <span class="adopt-badge new">New</span>
+                            <span class="adopt-gender female"><i class="fas fa-venus"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Snowball</h3>
+                            <p class="adopt-breed"><i class="fas fa-paw"></i> White Rabbit</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 1 year</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Kolkata</span>
+                            </div>
+                            <p class="adopt-desc">Fluffy and adorable! Snowball is gentle and loves carrots. Perfect first pet!</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Gentle</span>
+                                <span class="tag">Easy care</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Snowball</button>
+                        </div>
+                    </div>
+
+                    <!-- Cat 3 -->
+                    <div class="adopt-card" data-type="cat">
+                        <div class="adopt-image">
+                            <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=400&h=300&fit=crop" alt="Shadow - Black Cat">
+                            <span class="adopt-gender male"><i class="fas fa-mars"></i></span>
+                        </div>
+                        <div class="adopt-info">
+                            <h3>Shadow</h3>
+                            <p class="adopt-breed"><i class="fas fa-cat"></i> Black Cat</p>
+                            <div class="adopt-details">
+                                <span><i class="fas fa-birthday-cake"></i> 2 years</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Hyderabad</span>
+                            </div>
+                            <p class="adopt-desc">Beautiful black coat. Shadow is shy initially but very loving once comfortable.</p>
+                            <div class="adopt-tags">
+                                <span class="tag">Shy</span>
+                                <span class="tag">Affectionate</span>
+                                <span class="tag">Neutered</span>
+                            </div>
+                            <button class="adopt-btn"><i class="fas fa-heart"></i> Adopt Shadow</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adoption Process -->
+                <div class="adopt-process">
+                    <h3><i class="fas fa-clipboard-list"></i> How Adoption Works</h3>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <h4>Browse & Choose</h4>
+                            <p>Find your perfect companion from our rescued animals</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <h4>Fill Application</h4>
+                            <p>Complete a simple adoption form with your details</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <h4>Home Visit</h4>
+                            <p>Our team verifies your home environment</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <h4>Welcome Home!</h4>
+                            <p>Complete the paperwork and take your new friend home</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adoption Form Modal Trigger -->
+                <div class="adopt-cta">
+                    <h3>Can't Find What You're Looking For?</h3>
+                    <p>Register with us and we'll notify you when matching animals become available!</p>
+                    <button class="adopt-register-btn" onclick="alert('Adoption inquiry form coming soon!')">
+                        <i class="fas fa-user-plus"></i> Register for Adoption Updates
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact" style="display:none;">
+            <div class="container">
+                <div class="contact-header">
+                    <div class="contact-icon-wrapper">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h2>Contact Us</h2>
+                    <p class="contact-subtitle">Get in touch with JeevRaksha team. We're here to help! 📞</p>
+                </div>
+
+                <div class="contact-wrapper">
+                    <!-- Contact Info Cards -->
+                    <div class="contact-info-section">
+                        <div class="contact-card">
+                            <div class="contact-card-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <h3>Admin Support</h3>
+                            <p>For website issues, partnerships, or general inquiries</p>
+                            <a href="mailto:admin@jeevraksha.org" class="contact-link">
+                                <i class="fas fa-envelope"></i> admin@jeevraksha.org
+                            </a>
+                            <a href="tel:+911234567890" class="contact-link">
+                                <i class="fas fa-phone"></i> +91 12345 67890
+                            </a>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="contact-card-icon rescue">
+                                <i class="fas fa-ambulance"></i>
+                            </div>
+                            <h3>Emergency Rescue</h3>
+                            <p>For urgent animal rescue cases (24/7)</p>
+                            <a href="tel:+911800RESCUE" class="contact-link emergency">
+                                <i class="fas fa-phone-volume"></i> 1800-RESCUE (24/7)
+                            </a>
+                            <a href="https://wa.me/911234567890" class="contact-link whatsapp">
+                                <i class="fab fa-whatsapp"></i> WhatsApp Helpline
+                            </a>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="contact-card-icon location">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3>Head Office</h3>
+                            <p>Visit us or send mail</p>
+                            <address class="contact-address">
+                                <i class="fas fa-building"></i> JeevRaksha Foundation<br>
+                                123, Green Park Colony<br>
+                                New Delhi - 110016, India
+                            </address>
+                        </div>
+                    </div>
+
+                    <!-- Social Media Section -->
+                    <div class="social-media-section">
+                        <h3><i class="fas fa-share-alt"></i> Connect With Us</h3>
+                        <p>Follow us on social media for updates, rescue stories, and more!</p>
+                        
+                        <div class="social-grid">
+                            <a href="https://facebook.com/jeevraksha" target="_blank" class="social-card facebook">
+                                <i class="fab fa-facebook-f"></i>
+                                <span class="social-name">Facebook</span>
+                                <span class="social-handle">@JeevRaksha</span>
+                            </a>
+                            
+                            <a href="https://instagram.com/jeevraksha" target="_blank" class="social-card instagram">
+                                <i class="fab fa-instagram"></i>
+                                <span class="social-name">Instagram</span>
+                                <span class="social-handle">@jeevraksha_official</span>
+                            </a>
+                            
+                            <a href="https://twitter.com/jeevraksha" target="_blank" class="social-card twitter">
+                                <i class="fab fa-x-twitter"></i>
+                                <span class="social-name">Twitter / X</span>
+                                <span class="social-handle">@JeevRaksha</span>
+                            </a>
+                            
+                            <a href="https://youtube.com/@jeevraksha" target="_blank" class="social-card youtube">
+                                <i class="fab fa-youtube"></i>
+                                <span class="social-name">YouTube</span>
+                                <span class="social-handle">JeevRaksha Official</span>
+                            </a>
+                            
+                            <a href="https://linkedin.com/company/jeevraksha" target="_blank" class="social-card linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                                <span class="social-name">LinkedIn</span>
+                                <span class="social-handle">JeevRaksha Foundation</span>
+                            </a>
+                            
+                            <a href="https://wa.me/911234567890" target="_blank" class="social-card whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                                <span class="social-name">WhatsApp</span>
+                                <span class="social-handle">+91 12345 67890</span>
+                            </a>
+                            
+                            <a href="https://t.me/jeevraksha" target="_blank" class="social-card telegram">
+                                <i class="fab fa-telegram-plane"></i>
+                                <span class="social-name">Telegram</span>
+                                <span class="social-handle">@JeevRakshaChannel</span>
+                            </a>
+                            
+                            <a href="mailto:info@jeevraksha.org" class="social-card email">
+                                <i class="fas fa-envelope"></i>
+                                <span class="social-name">Email</span>
+                                <span class="social-handle">info@jeevraksha.org</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="contact-form-section">
+                        <h3><i class="fas fa-paper-plane"></i> Send Us a Message</h3>
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user"></i> Your Name</label>
+                                    <input type="text" name="name" placeholder="Enter your name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-envelope"></i> Email</label>
+                                    <input type="email" name="email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-phone"></i> Phone (Optional)</label>
+                                    <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-tag"></i> Subject</label>
+                                    <select name="subject" required>
+                                        <option value="">Select Subject</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="rescue">Rescue Query</option>
+                                        <option value="volunteer">Volunteer</option>
+                                        <option value="donation">Donation</option>
+                                        <option value="partnership">Partnership</option>
+                                        <option value="feedback">Feedback</option>
+                                        <option value="complaint">Complaint</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label><i class="fas fa-comment-dots"></i> Your Message</label>
+                                <textarea name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                            </div>
+                            <button type="submit" class="contact-submit-btn">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Team Section -->
+        <section class="team-section" id="team" style="display:none;">
+            <div class="container">
+                <div class="team-header">
+                    <div class="team-icon-wrapper">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h2>Meet Our Team</h2>
+                    <p class="team-subtitle">The passionate individuals behind JeevRaksha working to save lives every day</p>
+                </div>
+
+                <div class="team-grid">
+                    <!-- Medha -->
+                    <div class="team-card">
+                        <div class="team-photo-wrapper">
+                            <img src="../medha img.jpeg" alt="Medha" class="team-photo">
+                            <div class="team-photo-overlay">
+                                <div class="team-socials">
+                                    <a href="#" class="team-social-link"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Medha</h3>
+                            <span class="team-role">Co-Founder & CEO</span>
+                            <p class="team-bio">Visionary leader driving JeevRaksha's mission with strategic planning and partnership development. Passionate about creating sustainable animal welfare ecosystems.</p>
+                            <div class="team-skills">
+                                <span class="skill-tag">Leadership</span>
+                                <span class="skill-tag">Strategy</span>
+                                <span class="skill-tag">Partnerships</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanu -->
+                    <div class="team-card">
+                        <div class="team-photo-wrapper">
+                            <img src="../tanu img.jpeg" alt="Tanu" class="team-photo">
+                            <div class="team-photo-overlay">
+                                <div class="team-socials">
+                                    <a href="#" class="team-social-link"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Tanu</h3>
+                            <span class="team-role">Co-Founder & CTO</span>
+                            <p class="team-bio">Tech wizard behind the JeevRaksha platform. Building innovative solutions with AI-powered triage and real-time tracking systems.</p>
+                            <div class="team-skills">
+                                <span class="skill-tag">Full Stack</span>
+                                <span class="skill-tag">AI/ML</span>
+                                <span class="skill-tag">System Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Devansh -->
+                    <div class="team-card">
+                        <div class="team-photo-wrapper">
+                            <img src="../devansh shukla img.jpeg" alt="Devansh" class="team-photo">
+                            <div class="team-photo-overlay">
+                                <div class="team-socials">
+                                    <a href="#" class="team-social-link"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-github"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Devansh</h3>
+                            <span class="team-role">Co-Founder & Operations Head</span>
+                            <p class="team-bio">Ensures smooth coordination between volunteers, NGOs, and rescue teams. Expert in logistics and emergency response management.</p>
+                            <div class="team-skills">
+                                <span class="skill-tag">Operations</span>
+                                <span class="skill-tag">Coordination</span>
+                                <span class="skill-tag">NGO Relations</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ravi -->
+                    <div class="team-card">
+                        <div class="team-photo-wrapper">
+                            <img src="../ravi img.png" alt="Ravi" class="team-photo">
+                            <div class="team-photo-overlay">
+                                <div class="team-socials">
+                                    <a href="#" class="team-social-link"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="team-social-link"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Ravi</h3>
+                            <span class="team-role">Community Manager & Outreach</span>
+                            <p class="team-bio">Connects JeevRaksha with communities, volunteers, and supporters. Building a network of animal lovers across India.</p>
+                            <div class="team-skills">
+                                <span class="skill-tag">Marketing</span>
+                                <span class="skill-tag">Community</span>
+                                <span class="skill-tag">Social Media</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-cta">
+                    <div class="team-cta-content">
+                        <i class="fas fa-handshake"></i>
+                        <div>
+                            <h4>Want to join our team?</h4>
+                            <p>We're always looking for passionate individuals to help our mission</p>
+                        </div>
+                        <a href="#volunteer" class="team-join-btn">
+                            <i class="fas fa-arrow-right"></i> Join as Volunteer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq" style="display:none;">
+            <div class="container">
+                <div class="faq-header">
+                    <div class="faq-icon-wrapper">
+                        <i class="fas fa-question"></i>
+                    </div>
+                    <h2>Frequently Asked Questions</h2>
+                    <p class="faq-subtitle">Find answers to common questions about JeevRaksha</p>
+                </div>
+
+                <div class="faq-categories">
+                    <button class="faq-cat-btn active" data-category="all"><i class="fas fa-th-large"></i> All</button>
+                    <button class="faq-cat-btn" data-category="reporting"><i class="fas fa-paw"></i> Reporting</button>
+                    <button class="faq-cat-btn" data-category="rescue"><i class="fas fa-ambulance"></i> Rescue</button>
+                    <button class="faq-cat-btn" data-category="donate"><i class="fas fa-heart"></i> Donation</button>
+                    <button class="faq-cat-btn" data-category="general"><i class="fas fa-info-circle"></i> General</button>
+                </div>
+
+                <div class="faq-list">
+                    <!-- Reporting FAQs -->
+                    <div class="faq-item" data-category="reporting">
+                        <div class="faq-question">
+                            <span><i class="fas fa-paw"></i> How do I report an injured animal?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Click on "Report Animal" in the menu, fill in the details about the animal's condition, upload a photo, and share the location. Our rescue team will be notified immediately!</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="reporting">
+                        <div class="faq-question">
+                            <span><i class="fas fa-camera"></i> Is uploading a photo mandatory?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, a photo helps our rescue team assess the situation quickly and prepare the right equipment. It also helps verify the report and locate the animal faster.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="reporting">
+                        <div class="faq-question">
+                            <span><i class="fas fa-map-marker-alt"></i> What if I don't know the exact location?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Use the "Use My Location" button to automatically share your GPS coordinates. You can also describe nearby landmarks like shops, temples, or building names.</p>
+                        </div>
+                    </div>
+
+                    <!-- Rescue FAQs -->
+                    <div class="faq-item" data-category="rescue">
+                        <div class="faq-question">
+                            <span><i class="fas fa-clock"></i> How long does rescue take?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our average response time is 12-15 minutes in urban areas. For critical cases, we prioritize immediate dispatch. You can track the rescue live on our "Live Tracking" page.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="rescue">
+                        <div class="faq-question">
+                            <span><i class="fas fa-hospital"></i> What happens after rescue?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The animal is taken to our partner vet clinic for treatment. We provide regular updates on the animal's condition. Once recovered, we find them loving forever homes through our adoption program.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="rescue">
+                        <div class="faq-question">
+                            <span><i class="fas fa-satellite-dish"></i> How can I track my reported rescue?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>After reporting, you'll receive a Report ID (like JR-2026-X7K9). Go to "Live Tracking" and enter this ID to see real-time updates including team dispatch, ETA, and rescue status.</p>
+                        </div>
+                    </div>
+
+                    <!-- Donation FAQs -->
+                    <div class="faq-item" data-category="donate">
+                        <div class="faq-question">
+                            <span><i class="fas fa-rupee-sign"></i> How is my donation used?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Your donation goes towards: Medical care (40%), Food & Shelter (30%), Rescue Operations (20%), and Rehabilitation (10%). We maintain complete transparency with quarterly reports.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="donate">
+                        <div class="faq-question">
+                            <span><i class="fas fa-receipt"></i> Will I get a tax receipt?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! All donations are eligible for tax benefits under Section 80G. You'll receive an automated receipt via email within 24 hours of your donation.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="donate">
+                        <div class="faq-question">
+                            <span><i class="fas fa-sync-alt"></i> Can I set up monthly donations?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! Recurring donors are our heroes. Contact us at donate@jeevraksha.org to set up monthly auto-debit. You'll receive a special "Guardian Angel" badge on your profile!</p>
+                        </div>
+                    </div>
+
+                    <!-- General FAQs -->
+                    <div class="faq-item" data-category="general">
+                        <div class="faq-question">
+                            <span><i class="fas fa-users"></i> How can I volunteer?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We welcome volunteers! You can help with rescues, foster animals, assist at vet clinics, or help with awareness campaigns. Email us at volunteer@jeevraksha.org to join our family.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="general">
+                        <div class="faq-question">
+                            <span><i class="fas fa-handshake"></i> Are you partnered with NGOs?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We work with 50+ verified animal welfare NGOs across India. Our platform connects citizens directly with nearby rescue organizations for faster response.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item" data-category="general">
+                        <div class="faq-question">
+                            <span><i class="fas fa-phone-alt"></i> How can I contact JeevRaksha?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Emergency Helpline:</strong> 1800-XXX-XXXX (24/7)<br>
+                            <strong>Email:</strong> help@jeevraksha.org<br>
+                            <strong>WhatsApp:</strong> +91 98765 43210<br>
+                            We respond within 1 hour during business hours.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-contact">
+                    <div class="faq-contact-content">
+                        <i class="fas fa-headset"></i>
+                        <div>
+                            <h4>Still have questions?</h4>
+                            <p>Our support team is here to help you 24/7</p>
+                        </div>
+                        <a href="mailto:help@jeevraksha.org" class="contact-btn">
+                            <i class="fas fa-envelope"></i> Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p><i class="fas fa-heart"></i> &copy; 2026 JeevRaksha. Made with love for animals. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AI Triage Modal -->
+    <div class="triage-modal-overlay" id="triageModal">
+        <div class="triage-modal">
+            <button class="triage-modal-close" id="closeTriageModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Triage Form -->
+            <div class="triage-form-section" id="triageFormSection">
+                <div class="triage-modal-header">
+                    <div class="triage-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2>AI Urgency Assessment</h2>
+                    <p>Answer a few quick questions to determine the urgency level</p>
+                </div>
+
+                <form id="triageForm">
+                    <div class="triage-question">
+                        <label><i class="fas fa-paw"></i> What type of animal?</label>
+                        <select name="triageAnimal" id="triageAnimal" required>
+                            <option value="">Select animal...</option>
+                            <option value="dog">🐕 Dog (कुत्ता)</option>
+                            <option value="cat">🐈 Cat (बिल्ली)</option>
+                            <option value="cow">🐄 Cow (गाय)</option>
+                            <option value="buffalo">🐃 Buffalo (भैंस)</option>
+                            <option value="bird">🐦 Bird (पक्षी)</option>
+                            <option value="horse">🐴 Horse (घोड़ा)</option>
+                            <option value="donkey">🫏 Donkey (गधा)</option>
+                            <option value="other">🐾 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="triage-question checkbox-group">
+                        <label>Select all that apply:</label>
+                        
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="triageBleeding" name="bleeding">
+                            <label for="triageBleeding"><i class="fas fa-tint text-red"></i> Bleeding or open wound</label>
+                        </div>
+                        
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="triageStand" name="stand">
+                            <label for="triageStand"><i class="fas fa-wheelchair text-orange"></i> Cannot stand or walk</label>
+                        </div>
+                        
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="triageVehicle" name="vehicle">
+                            <label for="triageVehicle"><i class="fas fa-car-crash text-red"></i> Hit by vehicle</label>
+                        </div>
+                        
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="triageBreathing" name="breathing">
+                            <label for="triageBreathing"><i class="fas fa-lungs text-orange"></i> Difficulty breathing</label>
+                        </div>
+                        
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="triageYoung" name="young">
+                            <label for="triageYoung"><i class="fas fa-baby text-blue"></i> Young/Baby animal alone</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="triage-submit-btn">
+                        <i class="fas fa-search"></i> Analyze Urgency
+                    </button>
+                </form>
+            </div>
+
+            <!-- Triage Result -->
+            <div class="triage-result-section" id="triageResultSection" style="display:none;">
+                <div class="result-icon" id="triageResultIcon">🔄</div>
+                <div class="result-level" id="triageResultLevel">Analyzing...</div>
+                <div class="result-animal" id="triageResultAnimal"></div>
+                
+                <div class="severity-bar">
+                    <div class="severity-fill" id="triageSeverityFill"></div>
+                </div>
+                
+                <div class="result-advice" id="triageResultAdvice">
+                    <h3><i class="fas fa-first-aid"></i> First Aid Instructions</h3>
+                    <ul id="triageAdviceList"></ul>
+                </div>
+                
+                <div class="triage-btn-group">
+                    <button type="button" class="triage-apply-btn" id="applyUrgencyBtn">
+                        <i class="fas fa-check"></i> Apply to Report
+                    </button>
+                    <button type="button" class="triage-retry-btn" id="retryTriageBtn">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triage Result | JeevRaksha</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .result-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f0f4f3 0%, #e8f5e9 100%);
+        }
+        .result-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+        }
+        .result-level {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .result-level.critical { color: #dc2626; }
+        .result-level.urgent { color: #ea580c; }
+        .result-level.monitor { color: #ca8a04; }
+        .result-level.non-emergency { color: #16a34a; }
+        
+        .result-animal {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #f3f4f6;
+            border-radius: 50px;
+            display: inline-block;
+        }
+        .result-advice {
+            background: linear-gradient(135deg, #f8faf9 0%, #e8f5e9 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+            border-left: 4px solid #2d8c6a;
+        }
+        .result-advice h3 {
+            color: #1a5f4a;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .result-advice ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            color: #374151;
+            line-height: 1.8;
+        }
+        .result-advice li {
+            margin-bottom: 0.5rem;
+        }
+        .contact-info {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        .contact-info h3 {
+            color: #92400e;
+            margin-bottom: 1rem;
+        }
+        .contact-info p {
+            margin: 0.5rem 0;
+            color: #78350f;
+        }
+        .contact-info i {
+            width: 24px;
+            color: #d97706;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2d8c6a 0%, #1a5f4a 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 95, 74, 0.3);
+        }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        .btn-emergency {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+        }
+        .severity-bar {
+            height: 8px;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            background: #e5e7eb;
+            overflow: hidden;
+        }
+        .severity-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+        .severity-fill.critical { background: linear-gradient(90deg, #dc2626, #ef4444); width: 100%; }
+        .severity-fill.urgent { background: linear-gradient(90deg, #ea580c, #f97316); width: 75%; }
+        .severity-fill.monitor { background: linear-gradient(90deg, #ca8a04, #eab308); width: 50%; }
+        .severity-fill.non-emergency { background: linear-gradient(90deg, #16a34a, #22c55e); width: 25%; }
+    </style>
+</head>
+<body>
+    <div class="result-page">
+        <div class="result-card">
+            <div class="result-icon" id="resultIcon">🔄</div>
+            <div class="result-level" id="resultLevel">Analyzing...</div>
+            <div class="result-animal" id="resultAnimal"></div>
+            
+            <div class="severity-bar">
+                <div class="severity-fill" id="severityFill"></div>
+            </div>
+            
+            <div class="result-advice" id="resultAdvice">
+                <h3><i class="fas fa-first-aid"></i> First Aid Instructions</h3>
+                <ul id="adviceList"></ul>
+            </div>
+            
+            <div class="contact-info" id="contactInfo">
+                <h3><i class="fas fa-phone-alt"></i> Who to Contact</h3>
+                <div id="contactDetails"></div>
+            </div>
+            
+            <div class="btn-group">
+                <a href="index.html#report" class="btn btn-primary">
+                    <i class="fas fa-clipboard-list"></i> Submit Full Report
+                </a>
+                <a href="ai-triage.html" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> New Assessment
+                </a>
+            </div>
+            <div class="btn-group" id="emergencyBtnGroup" style="display:none;">
+                <a href="tel:1962" class="btn btn-emergency">
+                    <i class="fas fa-phone"></i> Call Animal Helpline (1962)
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get data from URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const animal = params.get('animal') || 'Unknown';
+            const bleeding = params.get('bleeding') === 'yes';
+            const stand = params.get('stand') === 'yes';
+            const vehicle = params.get('vehicle') === 'yes';
+            const breathing = params.get('breathing') === 'yes';
+            const young = params.get('young') === 'yes';
+            
+            // Calculate severity score
+            let score = 0;
+            if (vehicle) score += 4;  // Vehicle hit is very serious
+            if (bleeding) score += 3;
+            if (breathing) score += 3;
+            if (stand) score += 2;
+            if (young) score += 1;
+            
+            // Determine result based on score and conditions
+            let level, icon, levelClass, advice, contacts;
+            
+            const animalEmojis = {
+                'dog': '🐕',
+                'cat': '🐈', 
+                'cow': '🐄',
+                'bird': '🐦',
+                'buffalo': '🐃',
+                'donkey': '🫏',
+                'horse': '🐴',
+                'other': '🐾'
+            };
+            
+            const animalNames = {
+                'dog': 'Dog (कुत्ता)',
+                'cat': 'Cat (बिल्ली)',
+                'cow': 'Cow (गाय)',
+                'bird': 'Bird (पक्षी)',
+                'buffalo': 'Buffalo (भैंस)',
+                'donkey': 'Donkey (गधा)',
+                'horse': 'Horse (घोड़ा)',
+                'other': 'Animal (जानवर)'
+            };
+            
+            // Smart logic based on combination of symptoms
+            if (score >= 6 || (vehicle && bleeding) || (bleeding && breathing)) {
+                // CRITICAL - Multiple severe symptoms or vehicle hit with bleeding
+                level = '🔴 CRITICAL EMERGENCY';
+                icon = '🚨';
+                levelClass = 'critical';
+                advice = [
+                    '<strong>DO NOT move</strong> the animal unless in immediate danger (traffic)',
+                    'Keep the animal calm - speak softly, avoid sudden movements',
+                    'If bleeding: Apply gentle pressure with clean cloth, DO NOT remove embedded objects',
+                    'Keep the animal warm with a blanket or cloth',
+                    'DO NOT give food or water - risk of choking',
+                    'Stay with the animal until help arrives'
+                ];
+                contacts = `
+                    <p><i class="fas fa-ambulance"></i> <strong>Animal Ambulance:</strong> 1962 (Immediate)</p>
+                    <p><i class="fas fa-hospital"></i> <strong>Nearest Vet Hospital:</strong> Search "vet hospital near me"</p>
+                    <p><i class="fas fa-users"></i> <strong>NGO Helpline:</strong> Contact local animal rescue</p>
+                `;
+                document.getElementById('emergencyBtnGroup').style.display = 'flex';
+                
+            } else if (score >= 4 || vehicle || (bleeding && !breathing)) {
+                // URGENT - Vehicle hit alone or bleeding
+                level = '🟠 URGENT';
+                icon = '⚠️';
+                levelClass = 'urgent';
+                
+                if (vehicle && !bleeding) {
+                    advice = [
+                        'Check for visible injuries - the animal may have internal injuries',
+                        'Observe if the animal can walk or is limping',
+                        'Look for signs of shock: pale gums, rapid breathing, weakness',
+                        'Create a safe barrier around the animal from traffic',
+                        'Do not force the animal to move',
+                        'Contact rescue team within 30 minutes'
+                    ];
+                } else {
+                    advice = [
+                        'Apply gentle pressure to stop bleeding with clean cloth',
+                        'If leg injury: Do not try to set bones, keep animal still',
+                        'Clean wounds gently with clean water if possible',
+                        'Keep the animal in a quiet, shaded place',
+                        'Monitor breathing and consciousness',
+                        'Arrange transport to vet within 1-2 hours'
+                    ];
+                }
+                contacts = `
+                    <p><i class="fas fa-phone"></i> <strong>Animal Helpline:</strong> 1962</p>
+                    <p><i class="fas fa-clinic-medical"></i> <strong>Local Vet:</strong> Visit within 2 hours</p>
+                    <p><i class="fas fa-hands-helping"></i> <strong>NGO:</strong> Contact for rescue assistance</p>
+                `;
+                
+            } else if (score >= 2 || breathing || stand) {
+                // MONITOR - Some concerning symptoms
+                level = '🟡 NEEDS ATTENTION';
+                icon = '👀';
+                levelClass = 'monitor';
+                
+                if (breathing) {
+                    advice = [
+                        'Keep the animal in a well-ventilated, cool area',
+                        'Do not crowd around - give space to breathe',
+                        'Check for any obstruction in mouth/throat',
+                        'Look for signs: open-mouth breathing, blue gums, wheezing',
+                        'Keep calm and quiet environment',
+                        'Consult a vet within a few hours if not improving'
+                    ];
+                } else if (young) {
+                    advice = [
+                        'Young animals need warmth - wrap in soft cloth',
+                        'Check if mother is nearby - wait 2-3 hours before assuming abandoned',
+                        'Provide water in a shallow dish (not milk for most animals)',
+                        'Keep in a quiet, safe box or container',
+                        'Do not over-handle - stress can be harmful',
+                        'Contact animal shelter for proper care guidance'
+                    ];
+                } else {
+                    advice = [
+                        'Help the animal to a safe, shaded area',
+                        'Provide fresh water nearby',
+                        'Check for obvious injuries or wounds',
+                        'Observe behavior for 30 minutes',
+                        'If condition worsens, escalate to urgent',
+                        'Contact local animal welfare if no improvement'
+                    ];
+                }
+                contacts = `
+                    <p><i class="fas fa-user-md"></i> <strong>Local Vet:</strong> Consultation recommended</p>
+                    <p><i class="fas fa-phone-alt"></i> <strong>Animal Welfare:</strong> 1962 for guidance</p>
+                `;
+                
+            } else {
+                // NON-EMERGENCY - Minor or no symptoms
+                level = '🟢 NON-EMERGENCY';
+                icon = '✅';
+                levelClass = 'non-emergency';
+                advice = [
+                    'The animal appears to be in stable condition',
+                    'Provide fresh water and some shade',
+                    'If stray: You can report location for regular feeding',
+                    'Keep an eye on the animal for any changes',
+                    'If healthy stray: Consider adoption or shelter reporting',
+                    'For long-term: Contact local NGO for sterilization programs'
+                ];
+                contacts = `
+                    <p><i class="fas fa-info-circle"></i> <strong>No immediate action needed</strong></p>
+                    <p><i class="fas fa-heart"></i> <strong>Want to help?</strong> Report for regular care or consider adoption</p>
+                `;
+            }
+            
+            // Update the page
+            document.getElementById('resultIcon').textContent = icon;
+            document.getElementById('resultLevel').textContent = level;
+            document.getElementById('resultLevel').className = 'result-level ' + levelClass;
+            document.getElementById('resultAnimal').innerHTML = `${animalEmojis[animal] || '🐾'} ${animalNames[animal] || 'Animal'}`;
+            document.getElementById('severityFill').className = 'severity-fill ' + levelClass;
+            document.getElementById('adviceList').innerHTML = advice.map(a => `<li>${a}</li>`).join('');
+            document.getElementById('contactDetails').innerHTML = contacts;
+        });
+    </script>
+</body>
+</html>
